@@ -3,9 +3,11 @@
 #include <SDL.h>
 #include <stdio.h>
 
-#include "input.h"
+#include "ball.h"
 #include "graphics.h"
+#include "input.h"
 #include "map.h"
+#include "paddle.h"
 
 namespace {
   const int kFps = 60;
@@ -15,9 +17,8 @@ int Game::kScreenWidth = 852;
 int Game::kScreenHeight = 480;
 
 Game::Game() {
-  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-    printf("SDL_Init Error: \n%s\n", SDL_GetError());
-  }
+  SDL_Init(SDL_INIT_EVERYTHING);
+  srand(SDL_GetTicks());
 
   loop();
 }
@@ -33,6 +34,9 @@ void Game::loop() {
   SDL_Event event;
 
   map_.reset(Map::createMap(graphics));
+  paddle_one_.reset(new Paddle(graphics, 200, 200));
+  paddle_two_.reset(new Paddle(graphics, 600, 200));
+  ball_.reset(new Ball(graphics, 320, 320));
 
   bool running = true;
   int last_update_time = SDL_GetTicks();
@@ -60,6 +64,26 @@ void Game::loop() {
 
     if (input.wasKeyPressed(SDLK_ESCAPE)) running = false;
 
+    if (input.isKeyHeld(SDLK_w) && input.isKeyHeld(SDLK_s)) {
+      paddle_one_->stopMoving();
+    } else if (input.isKeyHeld(SDLK_w)) {
+      paddle_one_->moveUp();
+    } else if (input.isKeyHeld(SDLK_s)) {
+      paddle_one_->moveDown();
+    } else {
+      paddle_one_->stopMoving();
+    }
+
+    if (input.isKeyHeld(SDLK_UP) && input.isKeyHeld(SDLK_DOWN)) {
+      paddle_two_->stopMoving();
+    } else if (input.isKeyHeld(SDLK_UP)) {
+      paddle_two_->moveUp();
+    } else if (input.isKeyHeld(SDLK_DOWN)) {
+      paddle_two_->moveDown();
+    } else {
+      paddle_two_->stopMoving();
+    }
+
     const int current_time_ms = SDL_GetTicks();
     const int elapsed_time = current_time_ms - last_update_time;
 
@@ -79,13 +103,24 @@ void Game::loop() {
 }
 
 void Game::update(int elapsed_time) {
-
+  paddle_one_->update(elapsed_time);
+  paddle_two_->update(elapsed_time);
+  ball_->update(elapsed_time);
+  if (ball_->collisionRectangle().collidesWith(paddle_one_->collisionRectangle())) {
+    ball_->bounce(*paddle_one_);
+  }
+  if (ball_->collisionRectangle().collidesWith(paddle_two_->collisionRectangle())) {
+    ball_->bounce(*paddle_two_);
+  }
 }
 
 void Game::draw(Graphics& graphics) {
   graphics.clear();
 
   map_->drawBackground(graphics);
+  paddle_one_->draw(graphics);
+  paddle_two_->draw(graphics);
+  ball_->draw(graphics);
 
   graphics.flip();
 }

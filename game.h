@@ -3,8 +3,10 @@
 
 #include <boost/scoped_ptr.hpp>
 
+class Ball;
 class Graphics;
 class Map;
+class Paddle;
 
 class Game {
 public:
@@ -20,6 +22,9 @@ private:
   void draw(Graphics& graphics);
 
   boost::scoped_ptr<Map> map_;
+  boost::scoped_ptr<Ball> ball_;
+  boost::scoped_ptr<Paddle> paddle_one_;
+  boost::scoped_ptr<Paddle> paddle_two_;
 };
 
 #endif // GAME_H_

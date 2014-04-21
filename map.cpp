@@ -25,7 +25,7 @@ std::string Map::getRandomBackground() {
   int file_number = rand() % 12 + 1;
   const std::string number = std::to_string(file_number);
 
-  const std::string file_name = "content/background/background" + number + ".bmp";
+  const std::string file_name("background/background" + number);
 
   return file_name;
 }

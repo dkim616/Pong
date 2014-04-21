@@ -33,17 +33,18 @@ Graphics::~Graphics() {
 }
 
 Graphics::SurfaceID Graphics::loadImage(const std::string& file_path, bool transparent) {
-  if (sprite_sheets_.count(file_path) == 0) {
-    sprite_sheets_[file_path] = SDL_LoadBMP(file_path.c_str());
+  const std::string file_path_fixed("content/" + file_path + ".bmp");
+  if (sprite_sheets_.count(file_path_fixed) == 0) {
+    sprite_sheets_[file_path_fixed] = SDL_LoadBMP(file_path_fixed.c_str());
 
     if (transparent) {
-      const Uint32 black_color = SDL_MapRGB(
-        sprite_sheets_[file_path]->format, 0, 0, 0);
-      SDL_SetColorKey(sprite_sheets_[file_path], SDL_TRUE, black_color);
+      const Uint32  cyan_color = SDL_MapRGB(
+        sprite_sheets_[file_path_fixed]->format, 0, 255, 255);
+      SDL_SetColorKey(sprite_sheets_[file_path_fixed], SDL_TRUE, cyan_color);
     }
   }
 
-  return sprite_sheets_[file_path];
+  return sprite_sheets_[file_path_fixed];
 }
 
 void Graphics::blitSurface(SurfaceID source,

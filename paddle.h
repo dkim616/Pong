@@ -1,5 +1,5 @@
-#ifndef BALL_H_
-#define BALL_H_
+#ifndef PADDLE_H_
+#define PADDLE_H_
 
 #include <boost/shared_ptr.hpp>
 
@@ -7,27 +7,26 @@
 
 class Graphics;
 class Sprite;
-class Paddle;
 
-class Ball {
+class Paddle {
 public:
-  Ball(Graphics& graphics, float x, float y);
+  Paddle(Graphics& graphics, float x, float y);
 
-  bool update(int elapsed_time);
+  void update(int elapsed_time);
   void draw(Graphics& graphics);
 
-  void bounce(Paddle& paddle);
+  void moveUp();
+  void moveDown();
+  void stopMoving();
 
   Rectangle collisionRectangle() const;
 
 private:
   void initializeSprite(Graphics& graphics);
-  void setRandomVelocity();
 
-  bool alive_;
   float x_, y_;
   float velocity_x_, velocity_y_;
   boost::shared_ptr<Sprite> sprite_;
 };
 
-#endif // BALL_H_
+#endif // PADDLE_H_
