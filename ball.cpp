@@ -15,7 +15,11 @@ namespace {
   const int kBallWidth = 32;
   const int kBallHeight = 32;
 
-  const int kMinVelocity = 250;
+  const int kMinRandomVelocity = 250;
+
+  const float kMaxVelocity = 0.5f;
+  const float kMinVelocity = 0.15f;
+  const float kBounceVelocityChange = 0.15f;
 }
 
 Ball::Ball(Graphics& graphics, float x, float y)
@@ -49,10 +53,31 @@ void Ball::draw(Graphics& graphics) {
 void Ball::bounce(Paddle& paddle) {
   if (velocity_x_ < 0) {
     x_ = paddle.collisionRectangle().left() + paddle.collisionRectangle().width();
+    if ((velocity_y_ < 0 && paddle.velocity_y() < 0) ||
+        (velocity_y_ > 0 && paddle.velocity_y() > 0)) {
+      velocity_x_ = std::min(-velocity_x_ + kBounceVelocityChange, kMaxVelocity);
+    } else if ((velocity_y_ < 0 && paddle.velocity_y() > 0) ||
+               (velocity_y_ > 0 && paddle.velocity_y() < 0)) {
+      velocity_x_ = std::max(-velocity_x_ - kBounceVelocityChange, kMinVelocity);
+      if (velocity_x_ < 0) velocity_x_ += kBounceVelocityChange;
+    } else {
+      velocity_x_ = -velocity_x_;
+    }
+    velocity_y_ += paddle.velocity_y();
   } else if (velocity_x_ > 0) {
     x_ = paddle.collisionRectangle().right() - paddle.collisionRectangle().width() - (float)kBallWidth;
+    if ((velocity_y_ < 0 && paddle.velocity_y() < 0) ||
+        (velocity_y_ > 0 && paddle.velocity_y() > 0)) {
+      velocity_x_ = std::max(-velocity_x_ - kBounceVelocityChange, -kMaxVelocity);
+    } else if ((velocity_y_ < 0 && paddle.velocity_y() > 0) ||
+               (velocity_y_ > 0 && paddle.velocity_y() < 0)) {
+      velocity_x_ = std::min(-velocity_x_ + kBounceVelocityChange, -kMinVelocity);
+      if (velocity_x_ < 0) velocity_x_ -= kBounceVelocityChange;
+    } else {
+      velocity_x_ = -velocity_x_;
+    }
+    velocity_y_ += paddle.velocity_y();
   }
-  velocity_x_ = -velocity_x_;
 }
 
 Rectangle Ball::collisionRectangle() const {
@@ -70,6 +95,6 @@ void Ball::initializeSprite(Graphics& graphics) {
 }
 
 void Ball::setRandomVelocity() {
-  velocity_x_ = (std::max(rand() % 1000, kMinVelocity) - 500.0f) / 1000.0f;
-  velocity_y_ = (std::max(rand() % 1000, kMinVelocity) - 500.0f) / 1000.0f;
+  velocity_x_ = (std::max(rand() % 1000, kMinRandomVelocity) - 500.0f) / 1000.0f;
+  velocity_y_ = (std::max(rand() % 1000, kMinRandomVelocity) - 500.0f) / 1000.0f;
 }

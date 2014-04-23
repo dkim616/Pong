@@ -34,8 +34,8 @@ void Game::loop() {
   SDL_Event event;
 
   map_.reset(Map::createMap(graphics));
-  paddle_one_.reset(new Paddle(graphics, 200, 200));
-  paddle_two_.reset(new Paddle(graphics, 600, 200));
+  paddle_one_.reset(new Paddle(graphics, 100, 150));
+  paddle_two_.reset(new Paddle(graphics, (float)(kScreenWidth - 100), 150));
   ball_.reset(new Ball(graphics, 320, 320));
 
   bool running = true;

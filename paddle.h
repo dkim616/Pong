@@ -19,6 +19,8 @@ public:
   void moveDown();
   void stopMoving();
 
+  float velocity_y() { return velocity_y_; }
+
   Rectangle collisionRectangle() const;
 
 private:
