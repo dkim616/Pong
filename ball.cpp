@@ -32,13 +32,13 @@ Ball::Ball(Graphics& graphics, float x, float y)
 
 bool Ball::update(int elapsed_time) {
   x_ += velocity_x_ * elapsed_time;
-  if (x_ < -100 || x_ > Game::kScreenWidth + 100 - 32) {
+  if (x_ < -100 || x_ > Game::kScreenWidth + 100 - kBallWidth) {
     x_ -= velocity_x_ * elapsed_time;
     alive_ = false;
   }
 
   y_ += velocity_y_ * elapsed_time;
-  if (y_ < 0 || y_ > Game::kScreenHeight - 32) {
+  if (y_ < 0 || y_ > Game::kScreenHeight - kBallWidth) {
     y_ -= velocity_y_ * elapsed_time;
     velocity_y_ = -velocity_y_;
   }
