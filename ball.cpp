@@ -47,7 +47,7 @@ bool Ball::update(int elapsed_time) {
 }
 
 void Ball::draw(Graphics& graphics) {
-  sprite_->draw(graphics, (int)x_, (int)y_);
+  sprite_->draw(graphics, x_, y_);
 }
 
 void Ball::bounce(Paddle& paddle) {

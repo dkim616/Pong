@@ -16,9 +16,9 @@ Sprite::Sprite(Graphics& graphics,
   source_rect_.h = height;
 }
 
-void Sprite::draw(Graphics& graphics, int x, int y) {
+void Sprite::draw(Graphics& graphics, float x, float y) {
   SDL_Rect destination_rectangle;
-  destination_rectangle.x = x;
-  destination_rectangle.y = y;
+  destination_rectangle.x = (int)x;
+  destination_rectangle.y = (int)y;
   graphics.blitSurface(sprite_sheet_, &source_rect_, &destination_rectangle);
 }

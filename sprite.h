@@ -17,7 +17,7 @@ public:
          int height);
 
   virtual void update(int /*elapsed_time*/) {}
-  void draw(Graphics& graphics, int x, int y);
+  void draw(Graphics& graphics, float x, float y);
 
 protected:
   SDL_Rect source_rect_;

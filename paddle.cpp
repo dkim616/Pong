@@ -33,7 +33,7 @@ void Paddle::update(int elapsed_time) {
 }
 
 void Paddle::draw(Graphics& graphics) {
-  sprite_->draw(graphics, (int)x_, (int)y_);
+  sprite_->draw(graphics, x_, y_);
 }
 
 void Paddle::moveUp() {

@@ -10,7 +10,7 @@
 #include "paddle.h"
 
 namespace {
-  const int kFps = 60;
+  const int kFps = 120;
 }
 
 int Game::kScreenWidth = 852;
