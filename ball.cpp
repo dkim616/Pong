@@ -12,8 +12,8 @@ namespace {
 
   const int kBallLeft = 0;
   const int kBallTop = 0;
-  const int kBallWidth = 32;
-  const int kBallHeight = 32;
+  const int kBallWidth = 16;
+  const int kBallHeight = 16;
 
   const int kMinRandomVelocity = 250;
 
