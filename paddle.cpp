@@ -7,19 +7,20 @@
 namespace {
   const std::string kSpriteFilePath("BallPaddle");
   
-  const int kPaddleLeft = 32;
+  const int kPaddleLeft = 16;
   const int kPaddleTop = 0;
   const int kPaddleWidth = 16;
-  const int kPaddleHeight = 32 * 5;
+  const int kPaddleHeight = 16 * 10;
 
   const float kPaddleVelocity = 0.300f;
 }
 
-Paddle::Paddle(Graphics& graphics, float x, float y)
+Paddle::Paddle(Graphics& graphics, float x, float y, bool flip_sprite)
     : x_(x),
       y_(y),
       velocity_x_(0.0f),
-      velocity_y_(0.0f) {
+      velocity_y_(0.0f),
+      flip_sprite_(flip_sprite) {
   initializeSprite(graphics);
 }
 
@@ -33,6 +34,9 @@ void Paddle::update(int elapsed_time) {
 }
 
 void Paddle::draw(Graphics& graphics) {
+  if (flip_sprite_) {
+
+  }
   sprite_->draw(graphics, x_, y_);
 }
 

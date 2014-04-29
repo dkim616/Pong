@@ -10,7 +10,7 @@ class Sprite;
 
 class Paddle {
 public:
-  Paddle(Graphics& graphics, float x, float y);
+  Paddle(Graphics& graphics, float x, float y, bool flip_sprite);
 
   void update(int elapsed_time);
   void draw(Graphics& graphics);
@@ -28,6 +28,7 @@ private:
 
   float x_, y_;
   float velocity_x_, velocity_y_;
+  bool flip_sprite_;
   boost::shared_ptr<Sprite> sprite_;
 };
 
