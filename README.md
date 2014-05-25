@@ -1,5 +1,5 @@
 ##Pong
-##In Progress
+###In Progress
 
 Author: Daniel Kim
 
