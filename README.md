@@ -1,6 +1,8 @@
-Pong
-====
+##Pong
+##In Progress
 
-This is a basic pong game created for practice and to learn the SDL2 library.
+Author: Daniel Kim
 
-Further features may be added in the future.
+This is a basic pong game written in C++ to learn the SDL2 library and practice game development.
+
+
